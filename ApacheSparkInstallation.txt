@@ -1,0 +1,84 @@
+Installing APACHE SPARK
+
+1. Check Java version
+	java -version
+2. Download Apache SPARK tar file
+	curl -O https://www-eu.apache.org/dist/spark/spark-2.4.3/spark-2.4.3-bin-hadoop2.7.tgz
+3. Extract Spark tarball
+	tar xvf spark-2.4.3-bin-hadoop2.7.tgz
+4. Move the Spark folder created after extraction to the /opt/ directory.
+	sudo mv spark-2.4.3-bin-hadoop2.7/ /opt/spark
+5. Set Spark environment
+5.a. list and open .bashrc file in vi editor mode
+	ls -la ~/ | more
+	vi ~/.bashrc
+5.b. Insert SPARK changes as below
+	export SPARK_HOME=/opt/spark
+	export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
+5.c. Activate changes
+	source ~/.bashrc
+6. Start standalone master server - The process will be listening on TCP port 8080.My Spark URL is spark://ubuntu:7077. 
+	start-master.sh 
+	
+	
+
+1. Go to Spark folder:
+	cd /opt/spark
+2. To launch python console run the following command
+	./bin/pyspark
+3. Spark console has started. Type 'spark' to see spark session object.
+	spark
+	
+4. Spark UI: http://localhost:4040
+
+/home/supriya/Documents/Supriya/UMBC_IS/UMBC_Courses/IS_700_IndStudy/Spark-The-Definitive-Guide-master/data/flight-data
+
+flightData2015 = spark\.read\.option("inferSchema", "true")\.option("header", "true")\.csv("/home/supriya/Documents/Supriya/UMBC_IS/UMBC_Courses/IS_700_IndStudy/Spark-The-Definitive-Guide-master/data/flight-data/csv/2015-summary.csv")
+
+
+vi ~/.bashrc
+i(input mode)
+add 
+esc-> : -> q! to quit -> w! to save > wq! to save and quit
+
+
+
+INSTALLING APACHE TOREE(JUPYTER KERNEL FOR SPARK)
+1. pip install toree
+2. jupyter toree install --spark_home /opt/spark --interpreters=Scala,PySpark,SQL --user
+
+3. pip install pyspark
+4. gedit .bashrc
+5. Add following environment variables to .bashrc file
+	export SPARK_HOME=/opt/spark
+	export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
+
+	export PYTHONPATH=$SPARK_HOME/python:$PYTHONPATH
+	export PYSPARK_DRIVER_PYTHON="jupyter"
+	export PYSPARK_DRIVER_PYTHON_OPTS="notebook"
+	export PYSPARK_PYTHON=python3
+	export PATH=$SPARK_HOME:$PATH:~/.local/bin:$JAVA_HOME/bin:$JAVA_HOME/jre/bin
+6. To start your PySpark Jupyter Notebook, simply run "pyspark" from your command line, and choose "Python" kernel OR simply create a new python file in jupyter and import spark session
+	from pyspark.sql import SparkSession
+	spark = SparkSession.builder.appName('Ops').getOrCreate()
+	df = spark.read.format("json").load("/home/supriya/Documents/Supriya/UMBC_IS/UMBC_Courses/IS_700_IndStudy/Spark-The-Definitive-Guide-master/data/flight-data/json/2015-summary.json")
+	df.printSchema
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
